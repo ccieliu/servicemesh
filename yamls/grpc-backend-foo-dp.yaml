@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-backend-foo-dp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc
+      version: foo
+  template:
+    metadata:
+      labels:
+        app: grpc
+        version: foo
+    spec:
+      containers:
+      - image: docker.io/ccieliu/mesh-demo
+        imagePullPolicy: IfNotPresent
+        name: mesh-demo
+        ports:
+        - containerPort: 50051
+        env:
+        - name: APP_VERSION
+          value: grpc-foo-v1.0
+        command: ['python3']
+        args: ["/data/grpc-backend.py"]

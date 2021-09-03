@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-backend-bar-dp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http
+      version: bar
+  template:
+    metadata:
+      labels:
+        app: http
+        version: bar
+    spec:
+      containers:
+      - image: docker.io/ccieliu/mesh-demo
+        imagePullPolicy: IfNotPresent
+        name: mesh-demo
+        ports:
+        - containerPort: 5000
+        env:
+        - name: APP_VERSION
+          value: http-bar-v1.0
+        command: ['python3']
+        args: ["/data/http-backend.py"]
