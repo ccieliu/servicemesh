@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: grpc-backend-vs
+  namespace: mesh-demo
+spec:
+  hosts:
+  - grpc-backend-svc
+  http:
+    - match:
+      - headers:
+          namespace:
+            exact: foo
+        route:
+        - destination:
+            host: grpc-backend-svc
+            subset: foo-set
+    - match:
+      - headers:
+          namespace:
+            exact: bar
+        route:
+        - destination:
+            host: grpc-backend-svc
+            subset: bar-set
