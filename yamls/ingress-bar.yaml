@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-bar
+spec:
+  ingressClassName: istio
+  rules:
+  - host: bar.mesh.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: web-app-bar-svc
+            port:
+              number: 8000
+        path: /
+        pathType: Prefix
